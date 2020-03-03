@@ -155,8 +155,14 @@ class GameScene extends Phaser.Scene {
   }
 
   public update() {
-    if (this.players[this.id]) {
-      const player = this.players[this.id];
+    for (const playerId of Object.keys(this.players)) {
+      const player = this.players[playerId];
+
+      if (playerId !== this.id) {
+        player.setTint(0x0000aa); // so we can tell our guy apart
+        player.update();
+        continue;
+      }
       let moving = false;
       if (this.leftKey && this.leftKey.isDown) {
         (player.body as Phaser.Physics.Arcade.Body).setVelocityX(-this.VELOCITY);
